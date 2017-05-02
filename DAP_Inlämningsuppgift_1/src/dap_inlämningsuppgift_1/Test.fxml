@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <SplitPane dividerPositions="0.2826086956521739" prefHeight="160.0" prefWidth="200.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="139.0" fitWidth="184.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label layoutX="48.0" layoutY="14.0" text="Artist name here" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane dividerPositions="0.494949494949495" layoutX="80.0" layoutY="99.0" orientation="VERTICAL" prefHeight="398.0" prefWidth="426.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TableView layoutX="89.0" layoutY="20.0" prefHeight="193.0" prefWidth="424.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn fx:id="id" prefWidth="151.0" text="Artist ID" />
+                                  <TableColumn prefWidth="159.0" text="Artist name" />
+                                    <TableColumn prefWidth="158.0" text="Artist Genre" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <TextField layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="96.0" />
+                              <TextField layoutX="220.0" layoutY="14.0" prefHeight="25.0" prefWidth="96.0" />
+                              <TextField layoutX="118.0" layoutY="14.0" prefHeight="25.0" prefWidth="96.0" />
+                              <TextField layoutX="220.0" layoutY="59.0" prefHeight="25.0" prefWidth="96.0" />
+                              <Button layoutX="403.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
+                              <Button layoutX="264.0" layoutY="157.0" mnemonicParsing="false" text="Button" />
+                              <Button layoutX="323.0" layoutY="59.0" mnemonicParsing="false" text="Button" />
+                              <Button layoutX="323.0" layoutY="157.0" mnemonicParsing="false" text="Button" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </items>
+</SplitPane>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="534.0" prefWidth="454.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dap_inlämningsuppgift_1.FXMLDocumentController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TableView fx:id="table" editable="true" layoutX="143.0" layoutY="32.0" onContextMenuRequested="#showImageOnClickedItem" onMouseClicked="#showImageOnClickedItem" prefHeight="239.0" prefWidth="601.0" AnchorPane.bottomAnchor="-26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="id" minWidth="-1.0" onEditCommit="#handleEditAction" prefWidth="150.0" text="Artist ID" />
+                <TableColumn fx:id="name" onEditCommit="#handleEditAction" prefWidth="150.0" text="Artist" />
+                  <TableColumn fx:id="album" onEditCommit="#handleEditAction" prefWidth="150.0" text="Album" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="243.0" prefWidth="452.0">
+         <children>
+            <Button fx:id="deleteBtn" layoutX="283.0" layoutY="177.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete Artist" />
+            <ImageView fx:id="imageView" fitHeight="154.0" fitWidth="154.0" layoutX="13.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="statusLabel" alignment="CENTER" layoutX="194.0" layoutY="217.0" prefHeight="32.0" prefWidth="242.0" textFill="#e80b0b">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="artistInfoBtn" layoutX="370.0" layoutY="177.0" mnemonicParsing="false" onAction="#artistInfoButtonAction" text="Artist info" />
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="434.0">
+               <children>
+                  <TextField fx:id="addId" prefHeight="25.0" prefWidth="110.0" promptText="Enter artist id">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="addName" prefHeight="25.0" prefWidth="110.0" promptText="Enter artist name">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="addAlbum" prefHeight="25.0" prefWidth="110.0" promptText="Enter album name">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addButtonAction" text="Add Artist" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="63.0" prefHeight="53.0" prefWidth="440.0">
+               <children>
+                  <TextField fx:id="searchText" prefHeight="25.0" prefWidth="351.0" promptText="Type your text here">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="searchBtn" mnemonicParsing="false" text="Search">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
