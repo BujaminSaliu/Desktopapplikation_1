@@ -107,7 +107,6 @@ public class FXMLDocumentController implements Initializable {
 
     private Artist selectedArtist;
 
-    
     private Logics logics = Logics.getInstance();
 
     public static List<Artist> artistArrayList = new ArrayList<>();
@@ -200,61 +199,8 @@ public class FXMLDocumentController implements Initializable {
                 }
             }
         }
-        // ObservableArtistList.remove(selectedArtist);
-        //resets image
-//        imageView.setImage(null);
-//        //Alert the user for delete confirmation
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Delete confirmation");
-//        alert.setHeaderText("You can not undo this!");
-//        alert.setGraphic(new ImageView(this.getClass().getResource("warning_1.png").toString()));
-//        alert.setContentText("Are you sure you want to delete artist" + " " + selectedArtist.getArtistName() + "?");
-//        Optional<ButtonType> action = alert.showAndWait();
-//        if(action.get()==ButtonType.OK){
-//            selectedArtist = table.getSelectionModel().getSelectedItem();
-//            ObservableArtistList.remove(selectedArtist);
-//            statusLabel.setText(selectedArtist.getArtistName() + " " + "has been deleted. ");
-//            
-//        }else if(selectedArtist.getArtistName()==null){
-//            statusLabel.setText(" ");
-//        }
-//        System.out.println("List after removing: " + ObservableArtistList.size());
     }
 
-    //Add button clicked
-//    @FXML
-//    private void addButtonAction(ActionEvent e){
-//        TextInputDialog dialog = new TextInputDialog();
-//        dialog.setTitle("Add an artist");
-//        
-//        dialog.setContentText("Please artist name:");
-//
-//        // Traditional way to get the response value.
-//        Optional<String> result = dialog.showAndWait();
-//        if (result.isPresent()) {
-//            selectedArtist = table.getSelectionModel().getSelectedItem();
-//        ObservableArtistList.add(selectedArtist);
-//            System.out.println("Artist name: " + result.get());
-//            Artist artist = new Artist();
-//            ObservableArtistList.add(artist);
-//            int row = ObservableArtistList.size();
-//            artist.setId(row++);
-//             System.out.println(artist.getId());
-//            // Select the new row
-//            table.requestFocus();
-//            table.getSelectionModel().select(row);
-//
-//            table.getFocusModel().focus(row);
-//
-//            ObservableArtistList.add(new Artist(Integer.parseInt(addId.getText()), addName.getText(), addAlbum.getText()));
-//            statusLabel.setText("Artist: " + addName.getText() + " was added!");
-//            addName.clear();
-//                addAlbum.clear();
-//                addId.clear();
-//                
-//                System.out.println(addName.getText());
-//            }
-//            }    
     @FXML
     public void handleArtistFirstNameEditAction(CellEditEvent<Artist, String> t) {
         ((Artist) t.getTableView().getItems().get(
@@ -328,7 +274,6 @@ public class FXMLDocumentController implements Initializable {
             Logics.getAlbumArrayList().stream()
                     .filter(i -> i.getAlbumName().toLowerCase().startsWith(searchAlbumTextField.getText().toLowerCase()))
                     .forEach(j -> ObservableAlbumList.addAll(j));
-
         });
     }
 
@@ -339,103 +284,102 @@ public class FXMLDocumentController implements Initializable {
         boolean notExisted = true;
         Album album = new Album();
         int albumId = 0;
-        if(addAlbumNameTextField.getText().isEmpty() || addAlbumReleaseDateTextField.getText().isEmpty()){
-                statusLabel.setText("Please fill in both fields!");
-            }else if(addAlbumNameTextField.getText().matches("[^A-zåäö-]+$") && addAlbumReleaseDateTextField.getText().matches("^[0-9]*$") ){
-                statusLabel.setText("Please enter letters and numbers!");
-            }else{
-                try{
-        int release = Integer.parseInt(addAlbumReleaseDateTextField.getText());
-        
-        ObservableAlbumList.clear();
+        if (addAlbumNameTextField.getText().isEmpty() || addAlbumReleaseDateTextField.getText().isEmpty()) {
+            statusLabel.setText("Please fill in both fields!");
+        } else if (addAlbumNameTextField.getText().matches("[^A-zåäö-]+$") && addAlbumReleaseDateTextField.getText().matches("^[0-9]*$")) {
+            statusLabel.setText("Please enter letters and numbers!");
+        } else {
+            try {
+                int release = Integer.parseInt(addAlbumReleaseDateTextField.getText());
 
-        //if the album exists already in the AlbumArrayList
-        for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
-            if (addAlbumNameTextField.getText().equalsIgnoreCase(Logics.getAlbumArrayList().get(i).getAlbumName())
-                    && release == Logics.getAlbumArrayList().get(i).getAlbumReleaseDate()) {
-                albumId = Logics.getAlbumArrayList().get(i).getAlbumId();
-                check = true;
-            }
-        }
-        if (check) {
-            for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
-                //to check the if the album exists already to use similar id and not new one
-                if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {
+                ObservableAlbumList.clear();
 
-                    for (int j = 0; j < Logics.getArtistArrayList().get(i).getAlbumArrayList().size(); j++) {
+                //if the album exists already in the AlbumArrayList
+                for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
+                    if (addAlbumNameTextField.getText().equalsIgnoreCase(Logics.getAlbumArrayList().get(i).getAlbumName())
+                            && release == Logics.getAlbumArrayList().get(i).getAlbumReleaseDate()) {
+                        albumId = Logics.getAlbumArrayList().get(i).getAlbumId();
+                        check = true;
+                    }
+                }
+                if (check) {
+                    for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
+                        //to check the if the album exists already to use similar id and not new one
+                        if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {
 
-                        //check if the album does exist in the selected artist
-                        if (addAlbumNameTextField.getText().equalsIgnoreCase(Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumName())
-                                && release == Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumReleaseDate()) {
-                            //ObservableAlbumList.add(Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j));
-                            statusLabel.setText("Album aldready exists!");
-                            // break;
-                        } else {
-                            check2 = true;
+                            for (int j = 0; j < Logics.getArtistArrayList().get(i).getAlbumArrayList().size(); j++) {
+
+                                //check if the album does exist in the selected artist
+                                if (addAlbumNameTextField.getText().equalsIgnoreCase(Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumName())
+                                        && release == Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumReleaseDate()) {
+                                    //ObservableAlbumList.add(Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j));
+                                    statusLabel.setText("Album aldready exists!");
+                                    // break;
+                                } else {
+                                    check2 = true;
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    //if the album doesn't exist in the selected artist it will go to other artists
+                    //but if it does exist in other artist's albumArrayList
+                    if (check2) {
+                        ObservableAlbumList.clear();
+                        album = new Album(albumId, addAlbumNameTextField.getText(), release);
+                        for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
+                            if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {
+
+                                Logics.getArtistArrayList().get(i).getAlbumArrayList().add(album);
+                                ObservableAlbumList.addAll(Logics.getArtistArrayList().get(i).getAlbumArrayList());
+
+                                break;
+                            }
+
+                        }
+
+                        //Adding the person in to the new album arrayList
+                        for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
+                            if (Logics.getArtistArrayList().get(i).getArtistId() == albumId) {
+                                Logics.getAlbumArrayList().get(i).getArtistArrayList().add(new Artist(selectedArtist.getArtistId(), selectedArtist.getArtistFirstName(), selectedArtist.getArtistLastName()));
+                            }
+
                         }
                     }
+                } else {
+                    ObservableAlbumList.clear();
+                    //Add a new album
 
-                }
+                    statusLabel.setText(" ");
 
-            }
+                    int newAlbumId = (Logics.getAlbumArrayList().size() + 1);
 
-            //if the album doesn't exist in the selected artist it will go to other artists
-            //but if it does exist in other artist's albumArrayList
-            if (check2) {
-                ObservableAlbumList.clear();
-                album = new Album(albumId, addAlbumNameTextField.getText(), release);
-                for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
-                    if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {
+                    album = new Album(newAlbumId, addAlbumNameTextField.getText(), release);
 
-                        Logics.getArtistArrayList().get(i).getAlbumArrayList().add(album);
-                        ObservableAlbumList.addAll(Logics.getArtistArrayList().get(i).getAlbumArrayList());
+                    for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
 
-                        break;
+                        //to check the added album in the selected person
+                        if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {
+                            Logics.addAlbums(album);
+                            Logics.getArtistArrayList().get(i).setAlbumArrayList(album);
+                            ObservableAlbumList.addAll(Logics.getArtistArrayList().get(i).getAlbumArrayList());
+                        }
+
                     }
 
-                }
-
-                //Adding the person in to the new album arrayList
-                for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
-                    if (Logics.getArtistArrayList().get(i).getArtistId() == albumId) {
-                        Logics.getAlbumArrayList().get(i).getArtistArrayList().add(new Artist(selectedArtist.getArtistId(), selectedArtist.getArtistFirstName(), selectedArtist.getArtistLastName()));
+                    //Adding the person in to the new album arrayList
+                    for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
+                        if (Logics.getAlbumArrayList().get(i).getAlbumId() == newAlbumId) {
+                            Logics.getAlbumArrayList().get(i).getArtistArrayList().add(new Artist(selectedArtist.getArtistId(), selectedArtist.getArtistFirstName(), selectedArtist.getArtistLastName()));
+                        }
                     }
-
                 }
-            }
-        } else {
-            ObservableAlbumList.clear();
-            //When a new album to be added 
-            
-            statusLabel.setText(" ");
-            
-            int newAlbumId = (Logics.getAlbumArrayList().size() + 1);
-            
-            album = new Album(newAlbumId, addAlbumNameTextField.getText(), release);
-            
-            for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
-
-                //to check the added album in the selected person
-                if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {                    
-                    Logics.addAlbums(album);
-                    Logics.getArtistArrayList().get(i).setAlbumArrayList(album);                    
-                    ObservableAlbumList.addAll(Logics.getArtistArrayList().get(i).getAlbumArrayList());
-                }
-
-            }
-
-            //Adding the person in to the new album arrayList
-            for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
-                if (Logics.getAlbumArrayList().get(i).getAlbumId() == newAlbumId) {
-                    Logics.getAlbumArrayList().get(i).getArtistArrayList().add(new Artist(selectedArtist.getArtistId(), selectedArtist.getArtistFirstName(), selectedArtist.getArtistLastName()));
-                }
-            }
+            } catch (Exception e) {
+                statusLabel.setText("Only numbers!");
             }
         }
-             catch(Exception e){
-                    statusLabel.setText("Only numbers!");
-                    }
-    }
     }
 
     @FXML
@@ -466,15 +410,6 @@ public class FXMLDocumentController implements Initializable {
             default:
                 albumImage.loadImage("default", imageView);
                 break;
-//        for (int i = 0; i <artistArrayList.size(); i++) {
-//            if(selectedArtist.getArtistId()==artistArrayList.get(i).getArtistId()){
-//                for (int j = 0; j < artistArrayList.get(i).getAlbumArrayList().size(); j++) {
-//                    ObservableAlbumList.add(artistArrayList.get(i).getAlbumArrayList().get(j));
-//                }
-//                
-//            }
-//            
-//        }
         }
     }
 

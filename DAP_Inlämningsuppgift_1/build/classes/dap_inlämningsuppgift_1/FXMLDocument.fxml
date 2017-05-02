@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.*?>
@@ -9,28 +10,63 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dap_inlämningsuppgift_1.FXMLDocumentController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dap_inlämningsuppgift_1.FXMLDocumentController">
    <children>
-      <TableView fx:id="albumTable" editable="true" layoutX="301.0" layoutY="14.0" prefHeight="324.0" prefWidth="285.0">
-        <columns>
-          <TableColumn fx:id="albumIdColumn" prefWidth="75.0" text="Album Id" />
-          <TableColumn fx:id="albumNameColumn" onEditCommit="#handleAlbumNameEditAction" prefWidth="114.0" text="Album Name" />
-            <TableColumn fx:id="albumreleaseDateColumn" prefWidth="100.0" text="Release Date" />
-        </columns>
-      </TableView>
-      <TableView fx:id="artistTable" editable="true" layoutX="14.0" layoutY="14.0" onMouseClicked="#ArtistSelectionAction" prefHeight="200.0" prefWidth="149.0">
-        <columns>
-          <TableColumn fx:id="artistFirstNameColumn" onEditCommit="#handleArtistFirstNameEditAction" prefWidth="75.0" text="First Name" />
-          <TableColumn fx:id="artistLastNameColumn" onEditCommit="#handleArtistLastNameEditAction" prefWidth="75.0" text="Last name" />
-        </columns>
-      </TableView>
-      <Button layoutX="425.0" layoutY="509.0" mnemonicParsing="false" onAction="#showAlbumInfo" text="Albuminfo" />
-      <TextField fx:id="searchArtistTextField" layoutX="14.0" layoutY="220.0" promptText="Search Artist" />
-      <TextField fx:id="searchAlbumTextField" layoutX="359.0" layoutY="345.0" prefHeight="25.0" prefWidth="227.0" promptText="Search Album" />
-      <Button layoutX="504.0" layoutY="509.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" />
-      <Button layoutX="330.0" layoutY="509.0" mnemonicParsing="false" onAction="#insertAlbumButtonAction" text="Insert Album" />
-      <TextField fx:id="addAlbumNameTextField" layoutX="14.0" layoutY="509.0" promptText="Album name" />
-      <TextField fx:id="addAlbumReleaseDateTextField" layoutX="175.0" layoutY="509.0" promptText="Album release date" />
-      <Label fx:id="statusLabel" layoutX="330.0" layoutY="441.0" prefHeight="36.0" prefWidth="237.0" text="Label" />
+      <SplitPane dividerPositions="0.492816091954023" prefHeight="573.0" prefWidth="698.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="258.0">
+               <children>
+                  <TableView fx:id="artistTable" editable="true" layoutY="32.0" onMouseClicked="#artistSelectionAction" prefHeight="208.0" prefWidth="340.0">
+                    <columns>
+                      <TableColumn fx:id="artistFirstNameColumn" onEditCommit="#handleArtistFirstNameEditAction" prefWidth="102.0" text="First Name" />
+                      <TableColumn fx:id="artistLastNameColumn" onEditCommit="#handleArtistLastNameEditAction" prefWidth="101.0" text="Last name" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="searchArtistTextField" layoutX="14.0" layoutY="248.0" prefHeight="25.0" prefWidth="230.0" promptText="Search Artist" />
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="340.0" style="-fx-background-color: black;" text="ARTIST INFO" textFill="#d6b20f">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="404.0">
+               <children>
+                  <TableView fx:id="albumTable" editable="true" layoutX="1.0" layoutY="32.0" prefHeight="208.0" prefWidth="347.0">
+                    <columns>
+                      <TableColumn fx:id="albumIdColumn" prefWidth="60.0" text="Album Id" />
+                      <TableColumn fx:id="albumNameColumn" onEditCommit="#handleAlbumNameEditAction" prefWidth="204.0" text="Album Name" />
+                        <TableColumn fx:id="albumreleaseDateColumn" prefWidth="81.0" text="Release Year" />
+                    </columns>
+                  </TableView>
+                  <Button layoutX="167.0" layoutY="496.0" mnemonicParsing="false" onAction="#showAlbumInfo" style="-fx-background-color: orange;" text="Albuminfo" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="searchAlbumTextField" layoutX="12.0" layoutY="250.0" prefHeight="25.0" prefWidth="330.0" promptText="Search Album" />
+                  <Button layoutX="250.0" layoutY="496.0" mnemonicParsing="false" onAction="#deleteButtonAction" prefHeight="25.0" prefWidth="96.0" style="-fx-background-color: #dd4040;" text="Delete Album" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="253.0" layoutY="284.0" mnemonicParsing="false" onAction="#insertAlbumButtonAction" style="-fx-background-color: #1e93ce;" text="Insert Album" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="addAlbumNameTextField" layoutX="12.0" layoutY="284.0" prefHeight="25.0" prefWidth="115.0" promptText="Add Album Name" />
+                  <TextField fx:id="addAlbumReleaseDateTextField" layoutX="136.0" layoutY="284.0" prefHeight="25.0" prefWidth="108.0" promptText="Add Release Year" />
+                  <Label alignment="CENTER" layoutX="1.0" prefHeight="36.0" prefWidth="350.0" style="-fx-background-color: black;" text="ALBUM INFO" textFill="#d6b20f">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="statusLabel" layoutX="12.0" layoutY="521.0" prefHeight="36.0" prefWidth="464.0" textFill="#da0b0b" />
+                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="207.0" layoutX="14.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </Pane>
