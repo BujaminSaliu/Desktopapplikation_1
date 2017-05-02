@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,7 +107,7 @@ public class FXMLDocumentController implements Initializable {
 
     private Artist selectedArtist;
 
-    private int counter = 0;
+    
     private Logics logics = Logics.getInstance();
 
     public static List<Artist> artistArrayList = new ArrayList<>();
@@ -121,10 +120,10 @@ public class FXMLDocumentController implements Initializable {
 
 //    @FXML
 //    private void showImageOnClickedItem(MouseEvent event) {
-//        selectedArtist = table.getSelectionModel().getSelectedItem();
-//        System.out.println("Selected artist: " + selectedArtist.getArtistName());
+//        selectedArtist = artistTable.getSelectionModel().getSelectedItem();
+//        System.out.println("Selected artist: " + selectedArtist.getArtistFirstName());
 //        statusLabel.setText("");
-//        artistNameLabel.setText(selectedArtist.getArtistName());
+//        artistNameLabel.setText(selectedArtist.getArtistFirstName());
 //        switch (selectedArtist.getArtistId()) {
 //            
 //            case 1:
@@ -147,57 +146,60 @@ public class FXMLDocumentController implements Initializable {
 //                albumImage.loadImage("default", imageView);
 //                break;
 //        }
-//        
 //    }
-//    Delete button clicked
+    //Delete button clicked
     @FXML
     private void deleteButtonAction(ActionEvent e) {
-        
-         //resets image
-//        imageView.setImage(null);
+
+        //resets image
+        imageView.setImage(null);
+        selectedArtist = artistTable.getSelectionModel().getSelectedItem();
         //Alert the user for delete confirmation
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete confirmation");
-        alert.setHeaderText("You can not undo this!");
-        alert.setGraphic(new ImageView(this.getClass().getResource("warning_1.png").toString()));
-        alert.setContentText("Are you sure you want to delete artist" + " " + selectedArtist.getArtistFirstName()+ "?");
-        Optional<ButtonType> action = alert.showAndWait();
-        if(action.get()==ButtonType.OK){
-            selectedArtist = artistTable.getSelectionModel().getSelectedItem();
-            ObservableArtistList.remove(selectedArtist);
-            statusLabel.setText(selectedArtist.getArtistFirstName()+ " " + "has been deleted. ");
-            
-        }else if(selectedArtist.getArtistFirstName()==null){
-            statusLabel.setText(" ");
-        }
+
         //ObservableAlbumList.clear();
         Album selectedAlbum = albumTable.getSelectionModel().getSelectedItem();
-        for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
-            if (selectedArtist.getArtistId() == Logics.getArtistArrayList().get(i).getArtistId()) {
-                for (int j = 0; j < Logics.getArtistArrayList().get(i).getAlbumArrayList().size(); j++) {
-                    if (selectedAlbum.getAlbumId() == Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumId()) {
-                        Logics.getArtistArrayList().get(i).getAlbumArrayList().remove(selectedAlbum);
-                        ObservableAlbumList.remove(selectedAlbum);
+        if (selectedAlbum == null || selectedArtist == null) {
+            statusLabel.setText("Please select both Artist and album! ");
+        } else {
+            for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
+                if (selectedArtist.getArtistId() == Logics.getArtistArrayList().get(i).getArtistId()) {
+                    for (int j = 0; j < Logics.getArtistArrayList().get(i).getAlbumArrayList().size(); j++) {
+                        if (selectedAlbum.getAlbumId() == Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumId()) {
+
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete confirmation");
+                            alert.setHeaderText("You can not undo this!");
+                            alert.setGraphic(new ImageView(this.getClass().getResource("warning_1.png").toString()));
+                            alert.setContentText("Are you sure you want to delete album: " + " " + selectedAlbum.getAlbumName() + "?");
+                            Optional<ButtonType> action = alert.showAndWait();
+                            if (action.get() == ButtonType.OK) {
+
+                                ObservableAlbumList.remove(selectedAlbum);
+                                Logics.getArtistArrayList().get(i).getAlbumArrayList().remove(selectedAlbum);
+                                statusLabel.setText(selectedAlbum.getAlbumName() + " " + "has been deleted. ");
+
+                            } else if (selectedArtist.getArtistFirstName() == null) {
+                                statusLabel.setText(" ");
+                            }
+                            //ObservableAlbumList.remove(selectedAlbum);
+                        }
+
                     }
-
                 }
+            }
 
+            for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
+                if (selectedAlbum.getAlbumId() == Logics.getAlbumArrayList().get(i).getAlbumId()) {
+                    for (int j = 0; j < Logics.getAlbumArrayList().get(i).getArtistArrayList().size(); j++) {
+                        if (selectedArtist.getArtistId() == Logics.getAlbumArrayList().get(i).getArtistArrayList().get(j).getArtistId()) {
+                            Logics.getAlbumArrayList().get(i).getArtistArrayList().remove(Logics.getAlbumArrayList().get(i).getArtistArrayList().get(j));
+
+                        }
+
+                    }
+                }
             }
         }
-
-        for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
-            if (selectedAlbum.getAlbumId() == Logics.getAlbumArrayList().get(i).getAlbumId()) {
-                for (int j = 0; j < Logics.getAlbumArrayList().get(i).getArtistArrayList().size(); j++) {
-                    if (selectedArtist.getArtistId() == Logics.getAlbumArrayList().get(i).getArtistArrayList().get(j).getArtistId()) {
-                        Logics.getAlbumArrayList().get(i).getArtistArrayList().remove(Logics.getAlbumArrayList().get(i).getArtistArrayList().get(j));
-
-                    }
-
-                    // 
-                }
-            }
-        }
-
         // ObservableArtistList.remove(selectedArtist);
         //resets image
 //        imageView.setImage(null);
@@ -244,7 +246,6 @@ public class FXMLDocumentController implements Initializable {
 //
 //            table.getFocusModel().focus(row);
 //
-
 //            ObservableArtistList.add(new Artist(Integer.parseInt(addId.getText()), addName.getText(), addAlbum.getText()));
 //            statusLabel.setText("Artist: " + addName.getText() + " was added!");
 //            addName.clear();
@@ -338,8 +339,14 @@ public class FXMLDocumentController implements Initializable {
         boolean notExisted = true;
         Album album = new Album();
         int albumId = 0;
+        if(addAlbumNameTextField.getText().isEmpty() || addAlbumReleaseDateTextField.getText().isEmpty()){
+                statusLabel.setText("Please fill in both fields!");
+            }else if(addAlbumNameTextField.getText().matches("[^A-zåäö-]+$") && addAlbumReleaseDateTextField.getText().matches("^[0-9]*$") ){
+                statusLabel.setText("Please enter letters and numbers!");
+            }else{
+                try{
         int release = Integer.parseInt(addAlbumReleaseDateTextField.getText());
-        //List<Album> addAlbum = new ArrayList<>();
+        
         ObservableAlbumList.clear();
 
         //if the album exists already in the AlbumArrayList
@@ -357,11 +364,11 @@ public class FXMLDocumentController implements Initializable {
 
                     for (int j = 0; j < Logics.getArtistArrayList().get(i).getAlbumArrayList().size(); j++) {
 
-                        //check if the movie does exist in the selected artist
+                        //check if the album does exist in the selected artist
                         if (addAlbumNameTextField.getText().equalsIgnoreCase(Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumName())
                                 && release == Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j).getAlbumReleaseDate()) {
                             //ObservableAlbumList.add(Logics.getArtistArrayList().get(i).getAlbumArrayList().get(j));
-                            //message
+                            statusLabel.setText("Album aldready exists!");
                             // break;
                         } else {
                             check2 = true;
@@ -372,8 +379,8 @@ public class FXMLDocumentController implements Initializable {
 
             }
 
-            //if the movie doesn't exist in the selected actor it will go to other actors
-            //but if it does exist in other actor's movieArrayList
+            //if the album doesn't exist in the selected artist it will go to other artists
+            //but if it does exist in other artist's albumArrayList
             if (check2) {
                 ObservableAlbumList.clear();
                 album = new Album(albumId, addAlbumNameTextField.getText(), release);
@@ -388,7 +395,7 @@ public class FXMLDocumentController implements Initializable {
 
                 }
 
-                //Adding the person in to the new movie arrayList
+                //Adding the person in to the new album arrayList
                 for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
                     if (Logics.getArtistArrayList().get(i).getArtistId() == albumId) {
                         Logics.getAlbumArrayList().get(i).getArtistArrayList().add(new Artist(selectedArtist.getArtistId(), selectedArtist.getArtistFirstName(), selectedArtist.getArtistLastName()));
@@ -398,48 +405,67 @@ public class FXMLDocumentController implements Initializable {
             }
         } else {
             ObservableAlbumList.clear();
-            //When a new music to be added 
-            //warningMessage.setText("");
-            //movieObservableList.clear();
+            //When a new album to be added 
+            
+            statusLabel.setText(" ");
+            
             int newAlbumId = (Logics.getAlbumArrayList().size() + 1);
+            
             album = new Album(newAlbumId, addAlbumNameTextField.getText(), release);
+            
             for (int i = 0; i < Logics.getArtistArrayList().size(); i++) {
 
-                //to check the added movie in the selected person
-                if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {
-                    //logic.getAllArtistsArrayList().get(i).getMovieArrayList().add(mc);
+                //to check the added album in the selected person
+                if (Logics.getArtistArrayList().get(i).getArtistId() == selectedArtist.getArtistId()) {                    
                     Logics.addAlbums(album);
-                    Logics.getArtistArrayList().get(i).setAlbumArrayList(album);
-                    //logic.getAllArtistsArrayList().get(i).setMovieArrayList(album);
-                    //logic.addArtistInMusicArray(actorId, parts[0], parts[1], actorAge);
-                    //movieArrayList.addAll(logic.getAllArtistsArrayList().get(i).getMovieArrayList());
+                    Logics.getArtistArrayList().get(i).setAlbumArrayList(album);                    
                     ObservableAlbumList.addAll(Logics.getArtistArrayList().get(i).getAlbumArrayList());
                 }
 
             }
 
-            //Adding the person in to the new movie arrayList
+            //Adding the person in to the new album arrayList
             for (int i = 0; i < Logics.getAlbumArrayList().size(); i++) {
                 if (Logics.getAlbumArrayList().get(i).getAlbumId() == newAlbumId) {
                     Logics.getAlbumArrayList().get(i).getArtistArrayList().add(new Artist(selectedArtist.getArtistId(), selectedArtist.getArtistFirstName(), selectedArtist.getArtistLastName()));
                 }
             }
-
+            }
         }
+             catch(Exception e){
+                    statusLabel.setText("Only numbers!");
+                    }
+    }
     }
 
-//    private void loadImage(String picName) {
-//        Image image = new Image(getClass().getResourceAsStream(picName + ".jpg"));
-//        imageView.setImage(image);
-//    }
     @FXML
-    private void ArtistSelectionAction(MouseEvent event) {
+    private void artistSelectionAction(MouseEvent event) {
         selectedArtist = artistTable.getSelectionModel().getSelectedItem();
         ObservableAlbumList.clear();
         Logics.getArtistArrayList().stream()
                 .filter(i -> i.getArtistId() == selectedArtist.getArtistId())
                 .forEach(j -> ObservableAlbumList.addAll(j.getAlbumArrayList()));
+        switch (selectedArtist.getArtistId()) {
 
+            case 1:
+                albumImage.loadImage("michael", imageView);
+                break;
+
+            case 2:
+                albumImage.loadImage("adele", imageView);
+                break;
+
+            case 3:
+                albumImage.loadImage("whitney", imageView);
+                break;
+
+            case 4:
+                albumImage.loadImage("santana", imageView);
+                break;
+
+            default:
+                albumImage.loadImage("default", imageView);
+                break;
 //        for (int i = 0; i <artistArrayList.size(); i++) {
 //            if(selectedArtist.getArtistId()==artistArrayList.get(i).getArtistId()){
 //                for (int j = 0; j < artistArrayList.get(i).getAlbumArrayList().size(); j++) {
@@ -449,6 +475,7 @@ public class FXMLDocumentController implements Initializable {
 //            }
 //            
 //        }
+        }
     }
 
     @FXML
